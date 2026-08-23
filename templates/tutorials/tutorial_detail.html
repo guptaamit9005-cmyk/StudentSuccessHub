@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4">
+
+{% if tutorial.thumbnail %}
+
+<img
+src="{{ tutorial.thumbnail.url }}"
+class="img-fluid rounded mb-4">
+
+{% endif %}
+
+<h1>
+
+{{ tutorial.title }}
+
+</h1>
+
+<p class="text-secondary">
+
+Author :
+
+{{ tutorial.author }}
+
+|
+
+Views :
+
+{{ tutorial.views }}
+
+|
+
+Reading Time :
+
+{{ tutorial.reading_time }} min
+
+</p>
+
+<hr>
+
+<p>
+
+{{ tutorial.content|linebreaks }}
+
+</p>
+
+{% if tutorial.youtube_link %}
+
+<div class="ratio ratio-16x9 mt-4">
+
+<iframe
+src="{{ tutorial.youtube_link }}"
+allowfullscreen>
+
+</iframe>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

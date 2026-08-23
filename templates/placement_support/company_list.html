@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Placement Support{% endblock %}
+
+{% block content %}
+
+<style>
+body{
+    background:#0f172a;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:30px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:white;
+    font-size:35px;
+    font-weight:bold;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.search-box input{
+    width:300px;
+    padding:12px 15px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    background:#1e293b;
+    color:white;
+}
+
+.search-box button{
+    padding:12px 25px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.search-box button:hover{
+    background:#1d4ed8;
+}
+
+.company-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    gap:25px;
+}
+
+.company-card{
+    background:#1e293b;
+    border-radius:15px;
+    overflow:hidden;
+    transition:.3s;
+    border:1px solid #334155;
+}
+
+.company-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 25px rgba(0,0,0,.4);
+}
+
+.company-top{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    padding:25px;
+    text-align:center;
+}
+
+.company-logo{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:30px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.company-name{
+    color:white;
+    margin-top:15px;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.company-body{
+    padding:25px;
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    color:#cbd5e1;
+}
+
+.info span:first-child{
+    color:#94a3b8;
+}
+
+.skills{
+    margin-top:20px;
+}
+
+.skill{
+    display:inline-block;
+    background:#334155;
+    color:white;
+    padding:8px 14px;
+    margin:5px;
+    border-radius:30px;
+    font-size:13px;
+}
+
+.bottom{
+    margin-top:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.salary{
+    color:#22c55e;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.apply-btn{
+    background:#22c55e;
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.apply-btn:hover{
+    background:#16a34a;
+}
+
+.empty{
+    color:white;
+    text-align:center;
+    margin-top:50px;
+    font-size:22px;
+}
+
+@media(max-width:768px){
+
+.header{
+    flex-direction:column;
+    gap:20px;
+}
+
+.search-box input{
+    width:100%;
+}
+
+.search-box{
+    width:100%;
+}
+
+.search-box button{
+    width:100%;
+}
+
+}
+</style>
+
+<div class="container">
+
+<div class="header">
+
+<h1>💼 Placement Support</h1>
+
+<form method="GET" class="search-box">
+<input
+type="text"
+name="search"
+placeholder="Search Company..."
+value="{{ request.GET.search }}">
+
+<button type="submit">
+Search
+</button>
+
+</form>
+
+</div>
+
+<div class="company-grid">
+
+{% for company in companies %}
+
+<div class="company-card">
+
+<div class="company-top">
+
+<div class="company-logo">
+
+{{ company.company_name|first }}
+
+</div>
+
+<div class="company-name">
+
+{{ company.company_name }}
+
+</div>
+
+</div>
+
+<div class="company-body">
+
+<div class="info">
+<span>Role</span>
+<strong>{{ company.job_role }}</strong>
+</div>
+
+<div class="info">
+<span>Location</span>
+<strong>{{ company.location }}</strong>
+</div>
+
+<div class="info">
+<span>Eligibility</span>
+<strong>{{ company.eligibility }}</strong>
+</div>
+
+<div class="info">
+<span>Deadline</span>
+<strong>{{ company.deadline }}</strong>
+</div>
+
+<div class="skills">
+
+{% for skill in company.required_skills.all %}
+
+<span class="skill">
+{{ skill.name }}
+</span>
+
+{% empty %}
+
+<span class="skill">
+Python
+</span>
+
+<span class="skill">
+DSA
+</span>
+
+<span class="skill">
+SQL
+</span>
+
+{% endfor %}
+
+</div>
+
+<div class="bottom">
+
+<div class="salary">
+
+₹ {{ company.package }}
+
+</div>
+
+<a href="{{ company.apply_link }}"
+target="_blank"
+class="apply-btn">
+
+Apply Now →
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="empty">
+
+No Companies Available
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

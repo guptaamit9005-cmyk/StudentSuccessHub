@@ -1,0 +1,136 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-lg border-0">
+
+            <div class="card-header bg-success text-white">
+
+                <h3 class="mb-0">
+
+                    📤 Upload Resource
+
+                </h3>
+
+            </div>
+
+            <div class="card-body">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Resource Title
+
+                        </label>
+
+                        {{ form.title }}
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Description
+
+                        </label>
+
+                        {{ form.description }}
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Category
+
+                        </label>
+
+                        {{ form.category }}
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Upload File
+
+                        </label>
+
+                        {{ form.file }}
+
+                    </div>
+
+                    <!-- NEW FIELD -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Cover Image
+
+                        </label>
+
+                        {{ form.cover_image }}
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Tags
+
+                        </label>
+
+                        {{ form.tags }}
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            External Link
+
+                        </label>
+
+                        {{ form.external_link }}
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success btn-lg"
+                    >
+
+                        Upload Resource
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

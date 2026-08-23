@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+```
+<div class="row mb-4">
+
+    <div class="col-md-8">
+
+        <h2 class="fw-bold">
+            📢 Class Notice Board
+        </h2>
+
+        <p class="text-muted">
+            Stay updated with exams, assignments, events and placements.
+        </p>
+
+    </div>
+
+    <div class="col-md-4 text-end">
+
+        {% if request.user.role == 'cr' %}
+
+        <a href="{% url 'create_notice' %}"
+           class="btn btn-success btn-lg">
+
+            + Create Notice
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<form method="GET" class="card shadow-sm border-0 p-3 mb-4">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="🔍 Search notices..."
+            >
+
+        </div>
+
+        <div class="col-md-4">
+
+            <select
+                name="category"
+                class="form-select">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                <option value="exam">
+                    Exam
+                </option>
+
+                <option value="assignment">
+                    Assignment
+                </option>
+
+                <option value="placement">
+                    Placement
+                </option>
+
+                <option value="event">
+                    Event
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button
+                class="btn btn-primary w-100">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+
+{% for notice in notices %}
+
+<div class="card shadow border-0 mb-4">
+
+    <div class="card-body">
+
+        <div class="mb-2">
+
+            {% if notice.pinned %}
+            <span class="badge bg-warning text-dark">
+                📌 Pinned
+            </span>
+            {% endif %}
+
+            {% if notice.important %}
+            <span class="badge bg-danger">
+                Important
+            </span>
+            {% endif %}
+
+            <span class="badge bg-primary">
+                {{ notice.category|title }}
+            </span>
+
+        </div>
+
+        <h4 class="fw-bold">
+            {{ notice.title }}
+        </h4>
+
+        <p class="text-muted">
+            Posted by {{ notice.created_by.username }}
+        </p>
+
+        <p>
+            {{ notice.description|truncatewords:25 }}
+        </p>
+
+        <a href="{% url 'notice_detail' notice.id %}"
+           class="btn btn-outline-primary">
+
+            Read More
+
+        </a>
+
+        {% if request.user.role == 'cr' %}
+
+        <a href="{% url 'edit_notice' notice.id %}"
+           class="btn btn-warning">
+
+            Edit
+
+        </a>
+
+        <a href="{% url 'delete_notice' notice.id %}"
+           class="btn btn-danger">
+
+            Delete
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="alert alert-info">
+
+    No notices found.
+
+</div>
+
+{% endfor %}
+```
+
+</div>
+
+{% endblock %}

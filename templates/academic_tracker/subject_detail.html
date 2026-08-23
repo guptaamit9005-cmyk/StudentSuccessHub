@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">{{ subject.name }}</h1>
+
+    <!-- Progress Bar -->
+    <div class="progress mb-4">
+        <div class="progress-bar bg-success" 
+             role="progressbar" 
+             style="width: {{ progress }}%;" 
+             aria-valuenow="{{ progress }}" 
+             aria-valuemin="0" 
+             aria-valuemax="100">
+            {{ progress }}%
+        </div>
+    </div>
+
+    {% for unit in units %}
+        <div class="card mb-3">
+            <div class="card-header fw-bold">
+                {{ unit.title }}
+            </div>
+            <div class="card-body">
+                {% for topic in unit.topics.all %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>{{ topic.title }}</span>
+                        
+                        <a href="{% url 'mark_topic_complete' topic.id %}" 
+                           class="btn btn-success btn-sm">
+                            Toggle Complete
+                        </a>
+                    </div>
+                    
+                    {% if not forloop.last %}
+                        <hr>
+                    {% endif %}
+                {% empty %}
+                    <p class="text-muted">No topics found.</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-warning">
+            No Units Found For This Subject
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

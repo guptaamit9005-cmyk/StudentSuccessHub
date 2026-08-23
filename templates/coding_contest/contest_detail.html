@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Contest Header -->
+
+    <div class="card shadow-lg mb-4">
+
+        <div class="card-body">
+
+            <h1 class="fw-bold">
+                🏆 {{ contest.title }}
+            </h1>
+
+            <p class="text-muted">
+                {{ contest.description }}
+            </p>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <h6>📅 Start Date</h6>
+                    <p>
+                        {{ contest.start_date|date:"d M Y • h:i A" }}
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h6>⏰ End Date</h6>
+                    <p>
+                        {{ contest.end_date|date:"d M Y • h:i A" }}
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h6>👥 Participants</h6>
+                    <p>
+                        {{ participants_count|default:0 }}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Contest Statistics -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h2>
+                        {{ problems|length }}
+                    </h2>
+
+                    <p>
+                        Problems
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h2>
+                        {{ participants_count|default:0 }}
+                    </h2>
+
+                    <p>
+                        Participants
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <h2>
+                        🚀
+                    </h2>
+
+                    <p>
+                        Keep Coding
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Problems Section -->
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h3 class="mb-0">
+                📝 Contest Problems
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            {% if problems %}
+
+                {% for problem in problems %}
+
+                <div class="card mb-3 border">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <h5>
+                                    {{ problem.title }}
+                                </h5>
+
+                                <span class="badge bg-primary">
+                                    {{ problem.difficulty }}
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <a
+                                    href="{% url 'problem_detail' problem.id %}"
+                                    class="btn btn-success">
+
+                                    Solve Problem
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="alert alert-info">
+
+                    No problems added yet.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- Bottom Buttons -->
+
+    <div class="mt-4">
+
+        <a
+            href="{% url 'contest_list' %}"
+            class="btn btn-secondary">
+
+            ← Back To Contests
+
+        </a>
+
+        <button
+            class="btn btn-warning">
+
+            🏅 Leaderboard (Coming Soon)
+
+        </button>
+
+    </div>
+
+</div>
+
+{% endblock %}

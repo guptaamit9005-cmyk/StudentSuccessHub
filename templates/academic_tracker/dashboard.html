@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="dashboard-hero mb-5">
+    <h1 class="display-4 fw-bold">
+        📚 Academic Tracker
+    </h1>
+    <p class="lead mb-0">
+        Track your syllabus progress semester-wise and stay ahead of your classmates.
+    </p>
+</div>
+
+<!-- Analytics Section -->
+<div class="row mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card analytics-card card-1">
+            <div class="card-body text-center">
+                <h2>{{ total_subjects }}</h2>
+                <p class="mb-0">Total Subjects</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card analytics-card card-2">
+            <div class="card-body text-center">
+                <h2>{{ total_topics }}</h2>
+                <p class="mb-0">Total Topics</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card analytics-card card-3">
+            <div class="card-body text-center">
+                <h2>{{ completed_topics }}</h2>
+                <p class="mb-0">Completed Topics</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card analytics-card card-4">
+            <div class="card-body text-center">
+                <h2>{{ completed_goals }}</h2>
+                <p class="mb-0">Goals Achieved</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subjects -->
+<div class="row">
+    {% for subject in subjects %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card subject-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-primary">
+                            Semester {{ subject.semester }}
+                        </span>
+                        <small>{{ subject.code }}</small>
+                    </div>
+
+                    <h4 class="fw-bold">{{ subject.name }}</h4>
+
+                    {% if subject.description %}
+                        <p class="text-muted">
+                            {{ subject.description|truncatewords:15 }}
+                        </p>
+                    {% endif %}
+
+                    <div class="progress custom-progress mb-3">
+                        <div class="progress-bar bg-success" style="width: 0%;">
+                            0%
+                        </div>
+                    </div>
+
+                    <a href="{% url 'subject_detail' subject.id %}" 
+                       class="btn btn-primary w-100">
+                        📖 Open Subject
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4>No subjects added yet</h4>
+                    <p>Add subjects from Django Admin.</p>
+                    <a href="/admin/" class="btn btn-outline-primary">
+                        Open Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

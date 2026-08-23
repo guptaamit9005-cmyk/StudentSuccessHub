@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ student.first_name }} {{ student.last_name }}</h1>
+<p><strong>Roll:</strong> {{ student.roll_number }}</p>
+<p><strong>Class:</strong> {{ student.class_name }} {{ student.section }}</p>
+<p><strong>Phone:</strong> {{ student.phone }}</p>
+<p><strong>Address:</strong> {{ student.address }}</p>
+
+<a href="{% url 'student_update' student.pk %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'student_list' %}" class="btn btn-secondary">Back to list</a>
+{% endblock %}

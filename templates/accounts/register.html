@@ -1,0 +1,1027 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   STUDENT SUCCESS HUB — PREMIUM REGISTER PAGE
+   ========================================================= */
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --secondary: #2563eb;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --light: #f8fafc;
+    --danger: #ef4444;
+    --success: #16a34a;
+}
+
+/* ---------- Page ---------- */
+
+.register-page {
+    min-height: calc(100vh - 70px);
+    padding: 50px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(79, 70, 229, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(37, 99, 235, 0.16),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef2ff
+        );
+}
+
+/* ---------- Main Card ---------- */
+
+.register-card {
+    width: 100%;
+    max-width: 1000px;
+
+    display: grid;
+    grid-template-columns: 40% 60%;
+
+    background: rgba(255,255,255,0.95);
+
+    border: 1px solid rgba(255,255,255,0.8);
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 30px 80px rgba(15,23,42,0.15);
+
+    backdrop-filter: blur(20px);
+}
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.register-info {
+    position: relative;
+
+    padding: 50px 40px;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255,255,255,0.18),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #4f46e5,
+            #2563eb
+        );
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.register-info::before {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.08);
+
+    top: -80px;
+    right: -80px;
+}
+
+.register-info::after {
+    content: "";
+
+    position: absolute;
+
+    width: 160px;
+    height: 160px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.06);
+
+    bottom: -60px;
+    left: -60px;
+}
+
+.brand-icon {
+    position: relative;
+
+    width: 70px;
+    height: 70px;
+
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+    background: rgba(255,255,255,0.15);
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    backdrop-filter: blur(10px);
+
+    margin-bottom: 25px;
+}
+
+.register-info h1 {
+    position: relative;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    margin-bottom: 15px;
+}
+
+.register-info > p {
+    position: relative;
+
+    color: rgba(255,255,255,0.82);
+
+    line-height: 1.7;
+
+    font-size: 15px;
+}
+
+/* ---------- Features ---------- */
+
+.features {
+    position: relative;
+
+    margin-top: 35px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 18px;
+
+    font-size: 14px;
+
+    color: rgba(255,255,255,0.9);
+}
+
+.feature-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,0.14);
+
+    color: white;
+}
+
+/* ---------- Bottom ---------- */
+
+.info-bottom {
+    position: relative;
+
+    margin-top: 30px;
+
+    font-size: 13px;
+
+    color: rgba(255,255,255,0.65);
+}
+
+/* =========================================================
+   RIGHT SIDE — FORM
+   ========================================================= */
+
+.register-form {
+    padding: 50px;
+}
+
+.form-header {
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    color: var(--text);
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    color: var(--muted);
+
+    font-size: 14px;
+
+    margin: 0;
+}
+
+/* ---------- Form Groups ---------- */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.required {
+    color: var(--danger);
+}
+
+/* ---------- Django Inputs ---------- */
+
+.form-input,
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"],
+.register-form textarea,
+.register-form input[type="file"] {
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1.5px solid var(--border);
+
+    border-radius: 12px;
+
+    background: white;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    transition: all 0.25s ease;
+
+    box-sizing: border-box;
+}
+
+.register-form textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.register-form input[type="file"] {
+    padding: 10px;
+    background: var(--light);
+}
+
+/* Focus */
+
+.register-form input:focus,
+.register-form textarea:focus {
+
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(79,70,229,0.10);
+}
+
+/* Placeholder */
+
+.register-form input::placeholder,
+.register-form textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* ---------- Password Wrapper ---------- */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 50px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #64748b;
+
+    cursor: pointer;
+
+    font-size: 17px;
+}
+
+.password-toggle:hover {
+    color: var(--primary);
+}
+
+/* ---------- Password Strength ---------- */
+
+.password-strength {
+    margin-top: 8px;
+}
+
+.strength-bar {
+    height: 5px;
+
+    width: 100%;
+
+    border-radius: 10px;
+
+    background: #e2e8f0;
+
+    overflow: hidden;
+}
+
+.strength-fill {
+    height: 100%;
+
+    width: 0%;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+.strength-text {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: var(--muted);
+}
+
+/* ---------- Errors ---------- */
+
+.errorlist {
+    list-style: none;
+
+    padding: 0;
+    margin: 7px 0 0;
+
+    color: var(--danger);
+
+    font-size: 12px;
+}
+
+.error-message {
+    padding: 12px 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    color: #b91c1c;
+
+    font-size: 13px;
+}
+
+/* ---------- Submit ---------- */
+
+.submit-btn {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 13px;
+
+    padding: 14px 20px;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    box-shadow:
+        0 10px 25px rgba(79,70,229,0.25);
+
+    transition: all 0.25s ease;
+}
+
+.submit-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 15px 35px rgba(79,70,229,0.35);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ---------- Login ---------- */
+
+.login-link {
+
+    text-align: center;
+
+    margin-top: 24px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.login-link a {
+
+    color: var(--primary);
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    margin-left: 4px;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Terms ---------- */
+
+.terms {
+
+    text-align: center;
+
+    margin-top: 18px;
+
+    font-size: 11px;
+
+    color: #94a3b8;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .register-card {
+        grid-template-columns: 1fr;
+        max-width: 650px;
+    }
+
+    .register-info {
+        padding: 35px;
+    }
+
+    .features {
+        margin-top: 25px;
+    }
+
+    .info-bottom {
+        display: none;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .register-page {
+        padding: 25px 12px;
+    }
+
+    .register-card {
+        border-radius: 20px;
+    }
+
+    .register-info {
+        padding: 30px 25px;
+    }
+
+    .register-info h1 {
+        font-size: 26px;
+    }
+
+    .register-form {
+        padding: 30px 22px;
+    }
+
+    .form-header h2 {
+        font-size: 24px;
+    }
+
+}
+</style>
+
+
+<div class="register-page">
+
+    <div class="register-card">
+
+        <!-- =================================================
+             LEFT INFORMATION PANEL
+             ================================================= -->
+
+        <div class="register-info">
+
+            <div>
+
+                <div class="brand-icon">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+
+                <h1>
+                    Student Success Hub
+                </h1>
+
+                <p>
+                    Your all-in-one platform for learning,
+                    collaboration, academic growth and
+                    career preparation.
+                </p>
+
+
+                <div class="features">
+
+                    <div class="feature">
+
+                        <span class="feature-icon">
+                            <i class="bi bi-book-fill"></i>
+                        </span>
+
+                        <span>
+                            Access learning resources
+                        </span>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <span class="feature-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </span>
+
+                        <span>
+                            Connect with your community
+                        </span>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <span class="feature-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </span>
+
+                        <span>
+                            Track your academic progress
+                        </span>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <span class="feature-icon">
+                            <i class="bi bi-robot"></i>
+                        </span>
+
+                        <span>
+                            Learn with AI-powered tools
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-bottom">
+
+                <i class="bi bi-shield-check me-1"></i>
+
+                Your information is securely protected.
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             REGISTRATION FORM
+             ================================================= -->
+
+        <div class="register-form">
+
+            <div class="form-header">
+
+                <h2>
+                    Create your account
+                </h2>
+
+                <p>
+                    Fill in your details to get started.
+                </p>
+
+            </div>
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                novalidate
+            >
+
+                {% csrf_token %}
+
+
+                <!-- Non Field Errors -->
+
+                {% if form.non_field_errors %}
+
+                    <div class="error-message">
+
+                        {{ form.non_field_errors }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Username -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        Username
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="input-icon-wrapper">
+
+                        {{ form.username }}
+
+                    </div>
+
+                    {{ form.username.errors }}
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        Email Address
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    {{ form.email }}
+
+                    {{ form.email.errors }}
+
+                </div>
+
+
+                <!-- Bio -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        About You
+
+                    </label>
+
+                    {{ form.bio }}
+
+                    {{ form.bio.errors }}
+
+                </div>
+
+
+                <!-- Profile Picture -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        Profile Picture
+
+                    </label>
+
+                    {{ form.profile_picture }}
+
+                    {{ form.profile_picture.errors }}
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        Password
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        {{ form.password1 }}
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('id_password1','eye1')"
+                        >
+
+                            <i
+                                class="bi bi-eye-fill"
+                                id="eye1"
+                            ></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="password-strength">
+
+                        <div class="strength-bar">
+
+                            <div
+                                class="strength-fill"
+                                id="strengthFill"
+                            ></div>
+
+                        </div>
+
+                        <span
+                            class="strength-text"
+                            id="strengthText"
+                        >
+                            Password strength
+                        </span>
+
+                    </div>
+
+                    {{ form.password1.errors }}
+
+                </div>
+
+
+                <!-- Confirm Password -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+
+                        Confirm Password
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        {{ form.password2 }}
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('id_password2','eye2')"
+                        >
+
+                            <i
+                                class="bi bi-eye-fill"
+                                id="eye2"
+                            ></i>
+
+                        </button>
+
+                    </div>
+
+                    {{ form.password2.errors }}
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    <i class="bi bi-person-plus-fill me-2"></i>
+
+                    Create My Account
+
+                </button>
+
+            </form>
+
+
+            <!-- Login -->
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Login here
+                </a>
+
+            </div>
+
+
+            <div class="terms">
+
+                By creating an account, you agree to use
+                Student Success Hub responsibly and securely.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PASSWORD VISIBILITY
+   ========================================================= */
+
+function togglePassword(inputId, iconId) {
+
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+
+    if (!input) return;
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("bi-eye-fill");
+        icon.classList.add("bi-eye-slash-fill");
+
+    } else {
+
+        input.type = "password";
+
+        icon.classList.remove("bi-eye-slash-fill");
+        icon.classList.add("bi-eye-fill");
+
+    }
+}
+
+
+/* =========================================================
+   PASSWORD STRENGTH
+   ========================================================= */
+
+const passwordInput =
+    document.getElementById("id_password1");
+
+const strengthFill =
+    document.getElementById("strengthFill");
+
+const strengthText =
+    document.getElementById("strengthText");
+
+
+if (passwordInput) {
+
+    passwordInput.addEventListener(
+        "input",
+        function () {
+
+            const password = this.value;
+
+            let strength = 0;
+
+            if (password.length >= 8)
+                strength++;
+
+            if (/[A-Z]/.test(password))
+                strength++;
+
+            if (/[0-9]/.test(password))
+                strength++;
+
+            if (/[^A-Za-z0-9]/.test(password))
+                strength++;
+
+
+            const widths = [
+                "0%",
+                "25%",
+                "50%",
+                "75%",
+                "100%"
+            ];
+
+            const labels = [
+                "Password strength",
+                "Weak password",
+                "Fair password",
+                "Good password",
+                "Strong password"
+            ];
+
+
+            strengthFill.style.width =
+                widths[strength];
+
+            strengthText.textContent =
+                labels[strength];
+
+        }
+    );
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,243 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <h2 class="mb-0">
+                📢 Create Advanced Notice
+            </h2>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    {{ form.errors }}
+                </div>
+                {% endif %}
+
+                <!-- Notice Title -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Notice Title
+                    </label>
+
+                    {{ form.title }}
+
+                </div>
+
+                <!-- Description -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Description
+                    </label>
+
+                    {{ form.description }}
+
+                </div>
+
+                <!-- Category -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Category
+                    </label>
+
+                    <select
+                        name="category"
+                        class="form-select">
+
+                        <option value="exam">Exam</option>
+                        <option value="assignment">Assignment</option>
+                        <option value="placement">Placement</option>
+                        <option value="event">Event</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="hackathon">Hackathon</option>
+                        <option value="internship">Internship</option>
+                        <option value="urgent">Urgent</option>
+
+                    </select>
+
+                </div>
+
+                <!-- Image Upload -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Upload Notice Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="image"
+                        accept=".jpg,.jpeg,.png"
+                        class="form-control">
+
+                </div>
+
+                <!-- PDF Upload -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Upload PDF
+                    </label>
+
+                    <input
+                        type="file"
+                        name="pdf_file"
+                        accept=".pdf"
+                        class="form-control">
+
+                </div>
+
+                <!-- External Link -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Meeting / Resource Link
+                    </label>
+
+                    <input
+                        type="url"
+                        name="external_link"
+                        class="form-control"
+                        placeholder="Google Meet / Zoom / Drive / YouTube">
+
+                </div>
+
+                <!-- Deadline -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Submission Deadline
+                    </label>
+
+                    <input
+                        type="date"
+                        name="deadline"
+                        class="form-control">
+
+                </div>
+
+                <!-- Target Audience -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Target Audience
+                    </label>
+
+                    <select
+                        name="target_audience"
+                        class="form-select">
+
+                        <option value="all">
+                            All Students
+                        </option>
+
+                        <option value="bca">
+                            Only BCA
+                        </option>
+
+                        <option value="first_year">
+                            Only 1st Year
+                        </option>
+
+                        <option value="second_year">
+                            Only 2nd Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Tags -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Tags
+                    </label>
+
+                    <input
+                        type="text"
+                        name="tags"
+                        class="form-control"
+                        placeholder="Python, Java, Placement, DSA, Exam">
+
+                </div>
+
+                <!-- Important -->
+
+                <div class="form-check mb-2">
+
+                    {{ form.important }}
+
+                    <label class="form-check-label">
+
+                        Important Notice
+
+                    </label>
+
+                </div>
+
+                <!-- Pinned -->
+
+                <div class="form-check mb-4">
+
+                    {{ form.pinned }}
+
+                    <label class="form-check-label">
+
+                        📌 Pin Notice
+
+                    </label>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success btn-lg">
+
+                    🚀 Publish Notice
+
+                </button>
+
+                <a href="{% url 'notice_list' %}"
+                   class="btn btn-secondary btn-lg">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

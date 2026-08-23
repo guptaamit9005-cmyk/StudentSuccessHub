@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .login-wrapper {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+        background:
+            radial-gradient(circle at top left, rgba(25, 135, 84, 0.18), transparent 35%),
+            radial-gradient(circle at bottom right, rgba(13, 110, 253, 0.18), transparent 35%);
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 450px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 24px;
+        padding: 38px;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(15px);
+    }
+
+    .login-logo {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        color: white;
+        background: linear-gradient(135deg, #198754, #20c997);
+        box-shadow: 0 12px 30px rgba(25, 135, 84, 0.3);
+    }
+
+    .login-title {
+        font-weight: 800;
+        color: #17202a;
+        margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+        color: #6c757d;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #343a40;
+        margin-bottom: 8px;
+    }
+
+    .input-group {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+        transition: 0.25s ease;
+    }
+
+    .input-group:focus-within {
+        border-color: #198754;
+        box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.1);
+    }
+
+    .input-group-text {
+        background: #f8f9fa;
+        border: none;
+        color: #198754;
+        padding-left: 15px;
+    }
+
+    .form-control {
+        border: none;
+        box-shadow: none !important;
+        padding: 13px 12px;
+    }
+
+    .password-toggle {
+        cursor: pointer;
+        background: #fff;
+        border: none;
+        color: #6c757d;
+    }
+
+    .password-toggle:hover {
+        color: #198754;
+    }
+
+    .login-btn {
+        border: none;
+        border-radius: 12px;
+        padding: 13px;
+        font-weight: 700;
+        font-size: 16px;
+        background: linear-gradient(135deg, #198754, #20c997);
+        transition: all 0.25s ease;
+        box-shadow: 0 10px 25px rgba(25, 135, 84, 0.25);
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(25, 135, 84, 0.35);
+    }
+
+    .remember {
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .register-text {
+        margin-top: 25px;
+        text-align: center;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .register-link {
+        color: #198754;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .register-link:hover {
+        text-decoration: underline;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 25px 0;
+        color: #adb5bd;
+        font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #dee2e6;
+    }
+
+    @media (max-width: 576px) {
+        .login-card {
+            padding: 28px 22px;
+            border-radius: 20px;
+        }
+    }
+</style>
+
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <!-- Logo -->
+        <div class="login-logo">
+            <i class="bi bi-shield-lock-fill"></i>
+        </div>
+
+        <!-- Heading -->
+        <div class="text-center">
+            <h2 class="login-title">Welcome Back 👋</h2>
+
+            <p class="login-subtitle">
+                Login to continue to your account
+            </p>
+        </div>
+
+
+        <!-- Login Form -->
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- Username -->
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Username
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Password -->
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-lock-fill"></i>
+                    </span>
+
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="password-toggle px-3"
+                        onclick="togglePassword()"
+                    >
+                        <i class="bi bi-eye-fill" id="eyeIcon"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Remember -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div class="form-check remember">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="remember"
+                        name="remember"
+                    >
+
+                    <label
+                        class="form-check-label"
+                        for="remember"
+                    >
+                        Remember me
+                    </label>
+
+                </div>
+
+                <a
+                    href="#"
+                    class="register-link"
+                >
+                    Forgot password?
+                </a>
+
+            </div>
+
+
+            <!-- Login Button -->
+            <button
+                type="submit"
+                class="btn btn-success login-btn w-100"
+            >
+
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                Login
+
+            </button>
+
+        </form>
+
+
+        <!-- Divider -->
+        <div class="divider">
+            OR
+        </div>
+
+
+        <!-- Register -->
+        <div class="register-text">
+
+            Don't have an account?
+
+            <a
+                href="{% url 'register' %}"
+                class="register-link"
+            >
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword() {
+
+    const password = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        icon.classList.remove("bi-eye-fill");
+        icon.classList.add("bi-eye-slash-fill");
+
+    } else {
+
+        password.type = "password";
+
+        icon.classList.remove("bi-eye-slash-fill");
+        icon.classList.add("bi-eye-fill");
+
+    }
+}
+
+</script>
+
+{% endblock %}

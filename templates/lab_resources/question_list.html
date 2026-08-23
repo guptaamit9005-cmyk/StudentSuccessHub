@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <h1 class="mb-4">
+
+        📚 {{ subject.name }}
+
+    </h1>
+
+    <form method="GET">
+
+        <div class="input-group mb-4">
+
+            <input
+                type="text"
+                name="q"
+                value="{{ search_query }}"
+                class="form-control"
+                placeholder="Search Questions">
+
+            <button
+                class="btn btn-primary">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    {% for question in questions %}
+
+    <div class="card shadow mb-3">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between">
+
+                <div>
+
+                    <h4>
+
+                        {{ question.title }}
+
+                    </h4>
+
+                    <span class="badge bg-success">
+
+                        {{ question.difficulty }}
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    👁 {{ question.views }}
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <p>
+
+                {{ question.question|truncatewords:25 }}
+
+            </p>
+
+            <a
+                href="{% url 'question_detail' question.id %}"
+                class="btn btn-success">
+
+                View Solution
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="alert alert-warning">
+
+        No Questions Found
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

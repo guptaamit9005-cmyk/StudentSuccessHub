@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="card shadow-lg">
+
+        <div class="card-body">
+
+            <h2>
+
+                {{ question.title }}
+
+            </h2>
+
+            <span class="badge bg-primary">
+
+                {{ question.difficulty }}
+
+            </span>
+
+            <span class="badge bg-dark">
+
+                👁 {{ question.views }}
+            </span>
+
+            <hr>
+
+            <h4>
+
+                📝 Question
+
+            </h4>
+
+            <p>
+
+                {{ question.question }}
+
+            </p>
+
+            <hr>
+
+            <h4>
+
+                💻 Solution
+
+            </h4>
+
+            <pre
+                id="solutionCode"
+                class="bg-dark text-light p-4 rounded">
+
+{{ question.solution }}
+
+            </pre>
+
+            <button
+                onclick="copyCode()"
+                class="btn btn-primary">
+
+                📋 Copy Code
+
+            </button>
+
+            <button
+                onclick="downloadCode()"
+                class="btn btn-success">
+
+                ⬇ Download Code
+
+            </button>
+
+            <hr>
+
+            <h4>
+
+                🎤 Viva Questions
+
+            </h4>
+
+            <p>
+
+                {{ question.viva_questions }}
+
+            </p>
+
+            {% if question.pdf_notes %}
+
+            <a
+                href="{{ question.pdf_notes.url }}"
+                class="btn btn-danger">
+
+                📄 Download Notes
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function copyCode(){
+
+    const code =
+    document.getElementById(
+        "solutionCode"
+    ).innerText;
+
+    navigator.clipboard.writeText(
+        code
+    );
+
+    alert(
+        "Code Copied Successfully"
+    );
+}
+
+function downloadCode(){
+
+    const code =
+    document.getElementById(
+        "solutionCode"
+    ).innerText;
+
+    const blob =
+    new Blob(
+        [code],
+        {
+            type:
+            "text/plain"
+        }
+    );
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+    a.href =
+    URL.createObjectURL(
+        blob
+    );
+
+    a.download =
+    "solution.py";
+
+    a.click();
+}
+
+</script>
+
+{% endblock %}

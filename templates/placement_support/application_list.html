@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Applications{% endblock %}
+
+{% block content %}
+
+<style>
+
+body{
+    background:#0f172a;
+}
+
+.container{
+    max-width:1300px;
+    margin:auto;
+    padding:40px;
+}
+
+.page-title{
+    color:white;
+    font-size:36px;
+    font-weight:bold;
+    margin-bottom:35px;
+}
+
+.application-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
+    border:1px solid #334155;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+}
+
+.card-header{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    padding:25px;
+}
+
+.card-header h2{
+    margin:0;
+    font-size:28px;
+}
+
+.card-header p{
+    margin-top:8px;
+    color:#e2e8f0;
+}
+
+.card-body{
+    padding:25px;
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:18px;
+    color:#cbd5e1;
+}
+
+.info strong{
+    color:white;
+}
+
+.status{
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.applied{
+    background:#2563eb;
+    color:white;
+}
+
+.review{
+    background:#eab308;
+    color:black;
+}
+
+.shortlisted{
+    background:#14b8a6;
+    color:white;
+}
+
+.interview{
+    background:#8b5cf6;
+    color:white;
+}
+
+.selected{
+    background:#22c55e;
+    color:white;
+}
+
+.rejected{
+    background:#ef4444;
+    color:white;
+}
+
+.bottom{
+    margin-top:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn{
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#1d4ed8;
+}
+
+.date{
+    color:#94a3b8;
+}
+
+.empty{
+    background:#1e293b;
+    padding:60px;
+    text-align:center;
+    border-radius:20px;
+}
+
+.empty h2{
+    color:white;
+}
+
+.empty p{
+    color:#94a3b8;
+}
+
+.empty a{
+    display:inline-block;
+    margin-top:20px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:10px;
+}
+
+</style>
+
+<div class="container">
+
+<h1 class="page-title">
+My Job Applications
+</h1>
+
+{% if applications %}
+
+<div class="application-grid">
+
+{% for application in applications %}
+
+<div class="card">
+
+<div class="card-header">
+
+<h2>{{ application.company.company_name }}</h2>
+
+<p>{{ application.company.job_role }}</p>
+
+</div>
+
+<div class="card-body">
+
+<div class="info">
+<span>Location</span>
+<strong>{{ application.company.location }}</strong>
+</div>
+
+<div class="info">
+<span>Package</span>
+<strong>₹ {{ application.company.package }}</strong>
+</div>
+
+<div class="info">
+<span>Applied On</span>
+<strong>{{ application.applied_at|date:"d M Y" }}</strong>
+</div>
+
+<div class="info">
+
+<span>Status</span>
+
+{% if application.status == "Applied" %}
+<span class="status applied">{{ application.status }}</span>
+
+{% elif application.status == "Under Review" %}
+<span class="status review">{{ application.status }}</span>
+
+{% elif application.status == "Shortlisted" %}
+<span class="status shortlisted">{{ application.status }}</span>
+
+{% elif application.status == "Interview" %}
+<span class="status interview">{{ application.status }}</span>
+
+{% elif application.status == "Selected" %}
+<span class="status selected">{{ application.status }}</span>
+
+{% else %}
+<span class="status rejected">{{ application.status }}</span>
+{% endif %}
+
+</div>
+
+<div class="bottom">
+
+<span class="date">
+Application #{{ application.id }}
+</span>
+
+<a href="{% url 'company_detail' application.company.id %}"
+class="btn">
+
+View Company
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+<h2>No Applications Yet</h2>
+
+<p>
+
+You haven't applied to any company.
+
+</p>
+
+<a href="{% url 'company_list' %}">
+
+Browse Companies
+
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

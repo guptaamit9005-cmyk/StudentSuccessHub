@@ -1,0 +1,733 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+
+<style>
+
+    :root {
+
+        --primary: #6366f1;
+
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+
+    }
+
+    
+
+    body {
+
+        background: #0f172a;
+
+        color: #e2e8f0;
+
+        font-family: 'Inter', system-ui, sans-serif;
+
+    }
+
+    
+
+    .glass {
+
+        background: rgba(255, 255, 255, 0.06);
+
+        backdrop-filter: blur(20px);
+
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+    }
+
+    
+
+    .hero-card {
+
+        background: var(--primary-gradient);
+
+        border: none;
+
+        box-shadow: 0 25px 50px -12px rgb(99 102 241 / 0.4);
+
+    }
+
+    
+
+    .feature-card {
+
+        background: rgba(30, 41, 59, 0.6);
+
+        border: 1px solid rgba(148, 163, 184, 0.2);
+
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    }
+
+    
+
+    .feature-card:hover {
+
+        transform: translateY(-12px) scale(1.02);
+
+        border-color: #6366f1;
+
+        box-shadow: 0 30px 40px -15px rgb(99 102 241 / 0.3);
+
+    }
+
+    
+
+    .stat-number {
+
+        font-size: 2.8rem;
+
+        font-weight: 800;
+
+        background: linear-gradient(90deg, #a5b4fc, #c4b5fd);
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+
+        line-height: 1;
+
+    }
+
+    
+
+    .icon-grid .card {
+
+        background: rgba(30, 41, 59, 0.6);
+
+        border: 1px solid rgba(148, 163, 184, 0.15);
+
+        transition: all 0.3s ease;
+
+    }
+
+    
+
+    .icon-grid .card:hover {
+
+        transform: translateY(-6px) scale(1.08);
+
+        background: rgba(51, 65, 85, 0.8);
+
+    }
+
+    
+
+    .top-bar {
+
+        background: rgba(15, 23, 42, 0.8);
+
+        backdrop-filter: blur(12px);
+
+        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+
+    }
+
+</style>
+
+
+
+<div class="min-vh-100 pb-5">
+
+    <!-- Top Bar -->
+
+    <div class="top-bar py-3 px-4 rounded-3 mb-5 d-flex justify-content-between align-items-center sticky-top">
+
+        <div class="d-flex align-items-center gap-3">
+
+            <div class="bg-indigo-500 text-white rounded-2 p-2">
+
+                <span class="fs-3">🎓</span>
+
+            </div>
+
+            <div>
+
+                <h1 class="h3 fw-bold mb-0 text-white">
+
+                    Welcome to the student_success Hub , <span class="text-indigo-400</span>
+
+                </h1>
+
+                <p class="text-slate-400 mb-0 small">Your academic center • {{ request.user.role|default:"Student" }}</p>
+
+            </div>
+
+        </div>
+
+        
+
+        <div class="d-flex align-items-center gap-3">
+
+            <!-- Dark/Light Toggle -->
+
+            <button onclick="toggleTheme()" 
+
+                    class="btn btn-outline-light d-flex align-items-center gap-2 px-4 py-2 rounded-pill border-white border-opacity-20 hover:border-indigo-400">
+
+                <span id="theme-icon">☀️</span>
+
+            </button>
+
+            
+
+            <div class="vr text-slate-700"></div>
+
+            
+
+            <a href="{% url 'profile' %}" class="d-flex align-items-center gap-2 text-decoration-none">
+
+                <div class="text-end">
+
+                    <small class="text-slate-400">Logged in as</small>
+
+                    <div class="text-white fw-medium">{{ request.user.email|default:"student@university.edu" }}</div>
+
+                </div>
+
+                <img src="https://i.pravatar.cc/40?u={{ request.user.username }}" 
+
+                     alt="Profile" 
+
+                     class="rounded-circle border border-2 border-indigo-400"
+
+                     width="40" height="40">
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Hero Section -->
+
+    <div class="hero-card rounded-4 p-5 mb-5 shadow-2xl text-white position-relative overflow-hidden">
+
+        <div class="position-absolute top-0 end-0 mt-4 me-5 opacity-10" style="font-size: 12rem; line-height: 1;">🚀</div>
+
+        
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <h2 class="display-5 fw-bold mb-3">Ready to dominate this semester?</h2>
+
+                <p class="lead opacity-90 fs-4"> 
+
+                    All your academic tools — notices, resources, discussions, and placement prep — unified in one sleek platform.
+
+                </p>
+
+                <div class="d-flex gap-3 flex-wrap">
+
+                    <a href="{% url 'notice_list' %}" 
+
+                       class="btn btn-light btn-lg px-5 py-3 fw-semibold rounded-3 shadow-sm d-flex align-items-center gap-2">
+
+                        <i class="bi bi-bell"></i> Latest Notices
+
+                    </a>
+
+                    <a href="{% url 'resource_list' %}" 
+
+                       class="btn btn-outline-light btn-lg px-5 py-3 fw-semibold rounded-3 d-flex align-items-center gap-2">
+
+                        <i class="bi bi-folder2-open"></i> Explore Resources  
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 text-center d-none d-lg-block">
+
+                <div class="display-1 mb-0">📚💡🚀</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Main Feature Cards -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Notice Board -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <div class="d-flex align-items-center gap-4 mb-4">
+
+                        <div class="flex-shrink-0 bg-orange-500 text-white rounded-3 p-4 fs-1 shadow-inner">📢</div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">Notice Board</h4>
+
+                            <p class="text-slate-400">Important announcements & deadlines</p>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'notice_list' %}" class="btn btn-warning w-100 py-3 fw-semibold rounded-3">View All Notices</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Resources -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <div class="d-flex align-items-center gap-4 mb-4">
+
+                        <div class="flex-shrink-0 bg-emerald-500 text-white rounded-3 p-4 fs-1 shadow-inner">📚</div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">Resource Vault</h4>
+
+                            <p class="text-slate-400">Notes, PYQs, PDFs & study material</p>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'resource_list' %}" class="btn btn-success w-100 py-3 fw-semibold rounded-3">Browse Resources</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Forum -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <div class="d-flex align-items-center gap-4 mb-4">
+
+                        <div class="flex-shrink-0 bg-violet-500 text-white rounded-3 p-4 fs-1 shadow-inner">💬</div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">Community Forum</h4>
+
+                            <p class="text-slate-400">Ask questions • Share knowledge</p>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'discussion_list' %}" class="btn btn-primary w-100 py-3 fw-semibold rounded-3">Join Discussions</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Second Row -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Tutorials -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <div class="d-flex align-items-center gap-4 mb-4">
+
+                        <div class="flex-shrink-0 bg-slate-700 text-white rounded-3 p-4 fs-1 shadow-inner">📖</div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">Tutorials & Articles</h4>
+
+                            <p class="text-slate-400">DSA • Python • ML • System Design</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Roadmaps -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <div class="d-flex align-items-center gap-4 mb-4">
+
+                        <div class="flex-shrink-0 bg-primary text-white rounded-3 p-4 fs-1 shadow-inner">🗺️</div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">Roadmaps</h4>
+
+                            <p class="text-slate-400">
+
+                                AI • DSA • Web Development • Placement Preparation
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'roadmap_list' %}" class="btn btn-primary w-100 py-3 fw-semibold rounded-3">
+
+                        Explore Roadmaps
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Profile -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <div class="d-flex align-items-center gap-4 mb-4">
+
+                        <div class="flex-shrink-0 bg-cyan-500 text-white rounded-3 p-4 fs-1 shadow-inner">👤</div>
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">Your Profile</h4>
+
+                            <p class="text-slate-400">Progress, achievements & settings</p>
+
+                        </div>
+
+                    </div>
+
+                    <a href="{% url 'profile' %}" class="btn btn-info w-100 py-3 fw-semibold rounded-3">Manage Profile</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Quick Stats -->
+
+        <div class="col-md-4">
+
+            <div class="feature-card card h-100 rounded-4 shadow-sm overflow-hidden">
+
+                <div class="card-body p-5">
+
+                    <h5 class="text-slate-400 mb-4 fw-medium">QUICK STATS</h5>
+
+                    <div class="row text-center g-3">
+
+                        <div class="col-4">
+
+                            <div class="stat-number">24</div>
+
+                            <small class="text-slate-400">New Notices</small>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <div class="stat-number">87</div>
+
+                            <small class="text-slate-400">Resources</small>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <div class="stat-number">12</div>
+
+                            <small class="text-slate-400">Threads</small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Icon Grid -->
+
+    <h4 class="mb-4 fw-semibold text-slate-400 text-center">Everything You Need</h4>
+
+    <div class="row g-4 icon-grid mb-5">
+
+        <div class="col-6 col-sm-4 col-md-2">
+
+            <div class="card text-center h-100 rounded-4 feature-card">
+
+                <div class="card-body py-5">
+
+                    <div class="fs-1 mb-3">📢</div>
+
+                    <h6 class="fw-semibold">Notices</h6>
+
+                    <small class="text-slate-400">Stay Updated</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2">
+
+            <div class="card text-center h-100 rounded-4 feature-card">
+
+                <div class="card-body py-5">
+
+                    <div class="fs-1 mb-3">📚</div>
+
+                    <h6 class="fw-semibold">Resources</h6>
+
+                    <small class="text-slate-400">Learn Faster</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2">
+
+            <div class="card text-center h-100 rounded-4 feature-card">
+
+                <div class="card-body py-5">
+
+                    <div class="fs-1 mb-3">💬</div>
+
+                    <h6 class="fw-semibold">Forum</h6>
+
+                    <small class="text-slate-400">Collaborate</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2">
+
+            <div class="card text-center h-100 rounded-4 feature-card">
+
+                <div class="card-body py-5">
+
+                    <div class="fs-1 mb-3">📖</div>
+
+                    <h6 class="fw-semibold">Tutorials</h6>
+
+                    <small class="text-slate-400">Skill Up</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2">
+
+            <div class="card text-center h-100 rounded-4 feature-card">
+
+                <div class="card-body py-5">
+
+                    <div class="fs-1 mb-3">🚀</div>
+
+                    <h6 class="fw-semibold">Placements</h6>
+
+                    <small class="text-slate-400">Career Boost</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-2">
+
+            <div class="card text-center h-100 rounded-4 feature-card">
+
+                <div class="card-body py-5">
+
+                    <div class="fs-1 mb-3">🏆</div>
+
+                    <h6 class="fw-semibold">Achievements</h6>
+
+                    <small class="text-slate-400">Track Progress</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CR Section -->
+
+    {% if request.user.role == 'cr' %}
+
+    <div class="glass rounded-4 p-5">
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+
+            <span class="fs-2">🎯</span>
+
+            <h4 class="fw-bold mb-0">Class Representative Quick Actions</h4>
+
+        </div>
+
+        <div class="d-flex flex-wrap gap-3">
+
+            <a href="{% url 'create_notice' %}" class="btn btn-warning btn-lg px-5 py-3 rounded-3 flex-grow-1 flex-md-grow-0 shadow-sm">
+
+                <i class="bi bi-megaphone me-2"></i> Create Notice
+
+            </a>
+
+            <a href="{% url 'create_resource' %}" class="btn btn-success btn-lg px-5 py-3 rounded-3 flex-grow-1 flex-md-grow-0 shadow-sm">
+
+                <i class="bi bi-cloud-upload me-2"></i> Upload Resource
+
+            </a>
+
+            <a href="{% url 'create_discussion' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-3 flex-grow-1 flex-md-grow-0 shadow-sm">
+
+                <i class="bi bi-chat-dots me-2"></i> New Discussion
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<script>
+
+    function toggleTheme() {
+
+        const body = document.body;
+
+        const icon = document.getElementById('theme-icon');
+
+        
+
+        if (body.classList.contains('light-mode')) {
+
+            body.classList.remove('light-mode');
+
+            icon.textContent = '☀️';
+
+            localStorage.setItem('theme', 'dark');
+
+        } else {
+
+            body.classList.add('light-mode');
+
+            icon.textContent = '🌙';
+
+            localStorage.setItem('theme', 'light');
+
+        }
+
+    }
+
+    
+
+    // Load saved preference
+
+    window.onload = function() {
+
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+
+            document.body.classList.add('light-mode');
+
+            document.getElementById('theme-icon').textContent = '🌙';
+
+        }
+
+    };
+
+</script>
+
+
+
+{% endblock %}

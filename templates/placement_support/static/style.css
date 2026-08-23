@@ -1,0 +1,89 @@
+.company-card{
+
+border-radius:20px;
+
+overflow:hidden;
+
+transition:.35s;
+
+}
+
+.company-card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 20px 45px rgba(0,0,0,.18);
+
+}
+
+.company-logo{
+
+height:220px;
+
+object-fit:cover;
+
+transition:.4s;
+
+}
+
+.company-card:hover .company-logo{
+
+transform:scale(1.05);
+
+}
+
+.badge{
+
+font-size:13px;
+
+padding:8px 14px;
+
+}
+
+.btn{
+
+border-radius:12px;
+
+}
+
+.card-body{
+
+padding:25px;
+
+}
+
+.job-card{
+
+    border-radius:20px;
+
+    transition:.3s;
+
+}
+
+.job-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+
+}
+
+.job-card .badge{
+
+    font-size:12px;
+
+    padding:8px 12px;
+
+}
+
+.job-card h4{
+
+    color:#1e293b;
+
+}
+
+.job-card h6{
+
+    margin-bottom:0;
+
+}

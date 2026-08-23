@@ -1,0 +1,558 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary: #2563eb;
+        --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+    }
+
+    body {
+        background: #f4f7fb;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .hero {
+        background: var(--gradient);
+        color: white;
+        padding: 60px 40px;
+        border-radius: 24px;
+        margin-bottom: 40px;
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+    }
+
+    .hero h1 {
+        font-size: 46px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .hero p {
+        font-size: 19px;
+        opacity: 0.95;
+        margin-bottom: 20px;
+    }
+
+    .form-card, .preview-card, .info-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .form-card:hover, .preview-card:hover {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .section-title {
+        font-weight: 700;
+        color: #1e2937;
+        margin-bottom: 24px;
+        font-size: 1.4rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .form-control, .form-select {
+        border-radius: 12px;
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-primary {
+        background: var(--gradient);
+        border: none;
+        padding: 14px 32px;
+        font-weight: 600;
+        border-radius: 12px;
+    }
+
+    .btn-outline-secondary {
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+
+    /* Preview Enhancements */
+    #previewImage {
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .preview-card .card-body {
+        padding: 28px;
+    }
+
+    .badge {
+        padding: 8px 16px;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container py-5">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'roadmap_list' %}">Roadmaps</a></li>
+            <li class="breadcrumb-item active">Create Roadmap</li>
+        </ol>
+    </nav>
+
+    <!-- Premium Hero -->
+    <div class="hero">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1>🚀 Professional Roadmap Builder</h1>
+                <p class="mt-3">
+                    Design beautiful learning roadmaps for AI, Web Development, 
+                    DSA, Machine Learning and more.
+                </p>
+                <div class="mt-4">
+                    <span class="badge bg-light text-dark me-2">Canva Style</span>
+                    <span class="badge bg-warning text-dark me-2">roadmap.sh</span>
+                    <span class="badge bg-success">Interactive</span>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" 
+                     style="width:240px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));" 
+                     alt="Roadmap Builder">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Form -->
+        <div class="col-lg-8">
+            <div class="card shadow form-card">
+                <div class="card-body p-5">
+                    <h3 class="section-title">Roadmap Information</h3>
+                    
+                    <form method="POST" enctype="multipart/form-data" id="roadmapForm">
+                        {% csrf_token %}
+                        <div class="row g-4">
+
+                            <div class="col-md-12">
+                                <label class="form-label">Roadmap Title</label>
+                                {{ form.title }}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Subtitle</label>
+                                {{ form.subtitle }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Category</label>
+                                {{ form.category }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Difficulty</label>
+                                {{ form.difficulty }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Estimated Time</label>
+                                {{ form.estimated_time }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Visibility</label>
+                                {{ form.visibility }}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Upload Thumbnail</label>
+                                {{ form.thumbnail }}
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label">Description</label>
+                                {{ form.description }}
+                            </div>
+
+                        </div>
+
+                        <hr class="my-5">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'roadmap_list' %}" class="btn btn-outline-secondary btn-lg">
+                                ← Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                🚀 Create Roadmap
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Live Preview -->
+            <div class="card shadow preview-card mb-4">
+                <div class="card-body">
+                    <h4 class="text-center mb-4">📝 Live Preview</h4>
+                    <hr>
+                    <img id="previewImage"
+                         src="https://placehold.co/600x300?text=Roadmap+Thumbnail"
+                         class="img-fluid rounded mb-4"
+                         style="height:200px; width:100%; object-fit:cover;">
+                    
+                    <h3 id="previewTitle" class="fw-bold text-center mb-2">Roadmap Title</h3>
+                    <p id="previewSubtitle" class="text-muted text-center mb-3">Subtitle will appear here</p>
+                    
+                    <div class="text-center mb-4">
+                        <span id="previewDifficulty" class="badge bg-primary fs-6">Beginner</span>
+                    </div>
+
+                    <hr>
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h6 class="text-muted mb-1">⏳ Time</h6>
+                            <p id="previewTime" class="fw-bold fs-5 mb-0">3 Months</p>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="text-muted mb-1">👁 Visibility</h6>
+                            <p id="previewVisibility" class="fw-bold fs-5 mb-0">Public</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="card shadow info-card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">💡 Tips</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">• Choose a clear roadmap title</li>
+                        <li class="mb-2">• Add an attractive thumbnail</li>
+                        <li class="mb-2">• Write a compelling description</li>
+                        <li class="mb-2">• Select correct difficulty level</li>
+                        <li>• Mention estimated completion time</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="card shadow info-card">
+                <div class="card-body">
+                    <h5 class="mb-3">🚀 Roadmap Features</h5>
+                    <hr>
+                    <p>✔ Drag & Drop (Coming Soon)</p>
+                    <p>✔ Progress Tracking</p>
+                    <p>✔ Interactive Steps</p>
+                    <p>✔ AI Generated Roadmaps</p>
+                    <p>✔ PDF Export</p>
+                    <p>✔ PNG Export</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Live Preview Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const titleInput = document.getElementById("id_title");
+    const subtitleInput = document.getElementById("id_subtitle");
+    const difficultyInput = document.getElementById("id_difficulty");
+    const timeInput = document.getElementById("id_estimated_time");
+    const visibilityInput = document.getElementById("id_visibility");
+    const thumbnailInput = document.getElementById("id_thumbnail");
+
+    const previewTitle = document.getElementById("previewTitle");
+    const previewSubtitle = document.getElementById("previewSubtitle");
+    const previewDifficulty = document.getElementById("previewDifficulty");
+    const previewTime = document.getElementById("previewTime");
+    const previewVisibility = document.getElementById("previewVisibility");
+    const previewImage = document.getElementById("previewImage");
+
+    function updatePreview() {
+        if (titleInput && previewTitle) previewTitle.textContent = titleInput.value || "Roadmap Title";
+        if (subtitleInput && previewSubtitle) previewSubtitle.textContent = subtitleInput.value || "Subtitle will appear here";
+        if (difficultyInput && previewDifficulty) previewDifficulty.textContent = difficultyInput.value || "Beginner";
+        if (timeInput && previewTime) previewTime.textContent = timeInput.value || "3 Months";
+        if (visibilityInput && previewVisibility) previewVisibility.textContent = visibilityInput.value || "Public";
+    }
+
+    // Event Listeners
+    if (titleInput) titleInput.oninput = updatePreview;
+    if (subtitleInput) subtitleInput.oninput = updatePreview;
+    if (difficultyInput) difficultyInput.onchange = updatePreview;
+    if (timeInput) timeInput.oninput = updatePreview;
+    if (visibilityInput) visibilityInput.onchange = updatePreview;
+
+    // Thumbnail Preview
+    if (thumbnailInput) {
+        thumbnailInput.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    previewImage.src = ev.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+    }
+
+    updatePreview();
+});
+</script>
+
+<script>
+
+// ============================
+// Live Preview
+// ============================
+
+const titleInput = document.getElementById("id_title");
+const subtitleInput = document.getElementById("id_subtitle");
+const difficultyInput = document.getElementById("id_difficulty");
+const timeInput = document.getElementById("id_estimated_time");
+const visibilityInput = document.getElementById("id_visibility");
+const imageInput = document.getElementById("id_thumbnail");
+const descriptionInput = document.getElementById("id_description");
+
+
+// ============================
+// Preview Elements
+// ============================
+
+const previewTitle = document.getElementById("previewTitle");
+const previewSubtitle = document.getElementById("previewSubtitle");
+const previewDifficulty = document.getElementById("previewDifficulty");
+const previewTime = document.getElementById("previewTime");
+const previewVisibility = document.getElementById("previewVisibility");
+const previewImage = document.getElementById("previewImage");
+
+
+// ============================
+// Character Counters
+// ============================
+
+function createCounter(input){
+
+    if(!input) return;
+
+    const counter=document.createElement("small");
+
+    counter.className="text-muted d-block mt-1";
+
+    input.parentNode.appendChild(counter);
+
+    function update(){
+
+        counter.innerHTML=input.value.length+" characters";
+
+    }
+
+    input.addEventListener("input",update);
+
+    update();
+
+}
+
+createCounter(titleInput);
+createCounter(subtitleInput);
+createCounter(descriptionInput);
+
+
+// ============================
+// Live Preview
+// ============================
+
+if(titleInput){
+
+titleInput.addEventListener("input",function(){
+
+previewTitle.innerHTML=this.value || "Roadmap Title";
+
+});
+
+}
+
+if(subtitleInput){
+
+subtitleInput.addEventListener("input",function(){
+
+previewSubtitle.innerHTML=this.value || "Subtitle";
+
+});
+
+}
+
+if(difficultyInput){
+
+difficultyInput.addEventListener("change",function(){
+
+previewDifficulty.innerHTML=this.value;
+
+});
+
+}
+
+if(timeInput){
+
+timeInput.addEventListener("input",function(){
+
+previewTime.innerHTML=this.value || "3 Months";
+
+});
+
+}
+
+if(visibilityInput){
+
+visibilityInput.addEventListener("change",function(){
+
+previewVisibility.innerHTML=this.value;
+
+});
+
+}
+
+
+// ============================
+// Image Preview
+// ============================
+
+if(imageInput){
+
+imageInput.addEventListener("change",function(e){
+
+const file=e.target.files[0];
+
+if(file){
+
+const reader=new FileReader();
+
+reader.onload=function(event){
+
+previewImage.src=event.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+});
+
+}
+
+
+// ============================
+// Auto Save Draft
+// ============================
+
+function saveDraft(){
+
+const draft={
+
+title:titleInput ? titleInput.value : "",
+
+subtitle:subtitleInput ? subtitleInput.value : "",
+
+description:descriptionInput ? descriptionInput.value : "",
+
+difficulty:difficultyInput ? difficultyInput.value : "",
+
+time:timeInput ? timeInput.value : "",
+
+visibility:visibilityInput ? visibilityInput.value : ""
+
+};
+
+localStorage.setItem(
+
+"roadmapDraft",
+
+JSON.stringify(draft)
+
+);
+
+}
+
+setInterval(saveDraft,3000);
+
+
+// ============================
+// Load Draft
+// ============================
+
+window.onload=function(){
+
+const draft=localStorage.getItem(
+
+"roadmapDraft"
+
+);
+
+if(draft){
+
+const data=JSON.parse(draft);
+
+if(titleInput) titleInput.value=data.title;
+if(subtitleInput) subtitleInput.value=data.subtitle;
+if(descriptionInput) descriptionInput.value=data.description;
+if(difficultyInput) difficultyInput.value=data.difficulty;
+if(timeInput) timeInput.value=data.time;
+if(visibilityInput) visibilityInput.value=data.visibility;
+
+titleInput.dispatchEvent(new Event("input"));
+subtitleInput.dispatchEvent(new Event("input"));
+timeInput.dispatchEvent(new Event("input"));
+difficultyInput.dispatchEvent(new Event("change"));
+visibilityInput.dispatchEvent(new Event("change"));
+
+}
+
+};
+
+
+// ============================
+// Loading Button
+// ============================
+
+const roadmapForm=document.querySelector("form");
+
+if(roadmapForm){
+
+roadmapForm.addEventListener("submit",function(){
+
+const submitBtn=this.querySelector("button[type='submit']");
+
+submitBtn.disabled=true;
+
+submitBtn.innerHTML=`
+
+<span class="spinner-border spinner-border-sm"></span>
+
+ Creating Roadmap...
+
+`;
+
+});
+
+}
+
+</script>
+
+{% endblock %}

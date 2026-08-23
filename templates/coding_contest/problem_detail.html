@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary: #6366f1;
+    }
+    
+    body {
+        background: #0f172a;
+        color: #e2e8f0;
+    }
+    
+    .problem-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .glass {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+    }
+    
+    .difficulty-easy { background: #22c55e; color: #052e16; }
+    .difficulty-medium { background: #eab308; color: #422006; }
+    .difficulty-hard { background: #ef4444; color: white; }
+    
+    .problem-header {
+        background: linear-gradient(135deg, #1e2937, #334155);
+        border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    
+    .code-example {
+        background: #1e2937;
+        border-radius: 12px;
+        font-family: 'ui-monospace', monospace;
+    }
+</style>
+
+<div class="problem-container py-4 px-3">
+    
+    <!-- Header -->
+    <div class="glass rounded-4 p-5 mb-4 problem-header">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+            <div>
+                <h1 class="display-6 fw-bold mb-2">{{ problem.title }}</h1>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge fs-6 px-4 py-2 difficulty-{{ problem.difficulty|lower }}">
+                        {{ problem.difficulty }}
+                    </span>
+                    
+                    {% if problem.tags %}
+                    <div class="d-flex gap-2">
+                        {% for tag in problem.tags.all %}
+                        <span class="badge bg-secondary">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2 flex-wrap">
+                <button class="btn btn-outline-light rounded-pill px-4">
+                    <i class="bi bi-bookmark"></i> Bookmark
+                </button>
+                <a href="{% url 'submit_solution' problem.id %}" class="btn btn-primary rounded-pill px-5 py-2 fw-semibold">
+                    <i class="bi bi-play-circle"></i> Solve Problem
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        
+        <!-- Main Problem Statement -->
+        <div class="col-lg-8">
+            <div class="glass rounded-4 p-5">
+                <h4 class="fw-semibold mb-4 text-indigo-400">Problem Statement</h4>
+                <div class="problem-statement fs-6 lh-lg">
+                    {{ problem.statement|safe }}
+                </div>
+                
+                <hr class="my-5 border-secondary">
+                
+                <!-- Examples -->
+                {% if problem.examples %}
+                <h5 class="fw-semibold mb-4">Examples</h5>
+                {% for example in problem.examples %}
+                <div class="code-example p-4 mb-4">
+                    <strong class="text-success">Example {{ forloop.counter }}:</strong><br><br>
+                    <strong>Input:</strong> <code>{{ example.input }}</code><br>
+                    <strong>Output:</strong> <code>{{ example.output }}</code><br>
+                    {% if example.explanation %}
+                    <strong>Explanation:</strong> {{ example.explanation }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% endif %}
+                
+                <!-- Constraints -->
+                <h5 class="fw-semibold mb-3">Constraints</h5>
+                <div class="bg-dark p-4 rounded-3">
+                    <pre class="mb-0 text-slate-300">{{ problem.constraints|default:"1 ≤ n ≤ 10^5" }}</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            
+            <!-- Problem Info -->
+            <div class="glass rounded-4 p-4 mb-4">
+                <h5 class="fw-semibold mb-4">Problem Info</h5>
+                <div class="d-flex justify-content-between py-2 border-bottom border-secondary">
+                    <span class="text-slate-400">Acceptance Rate</span>
+                    <span class="fw-medium text-emerald-400">68%</span>
+                </div>
+                <div class="d-flex justify-content-between py-2 border-bottom border-secondary">
+                    <span class="text-slate-400">Submissions</span>
+                    <span class="fw-medium">12.4K</span>
+                </div>
+                <div class="d-flex justify-content-between py-2 border-bottom border-secondary">
+                    <span class="text-slate-400">Time Limit</span>
+                    <span class="fw-medium">2 seconds</span>
+                </div>
+                <div class="d-flex justify-content-between py-2">
+                    <span class="text-slate-400">Memory Limit</span>
+                    <span class="fw-medium">256 MB</span>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="glass rounded-4 p-4 mb-4">
+                <h5 class="fw-semibold mb-3">Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'submit_solution' problem.id %}" class="btn btn-primary py-3 fw-semibold">
+                        <i class="bi bi-code-square"></i> Submit Solution
+                    </a>
+                    <button class="btn btn-outline-light py-3">
+                        <i class="bi bi-chat-dots"></i> Discuss
+                    </button>
+                    <button class="btn btn-outline-light py-3">
+                        <i class="bi bi-lightbulb"></i> Editorial (Premium)
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Related Topics -->
+            <div class="glass rounded-4 p-4">
+                <h5 class="fw-semibold mb-3">Related Topics</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-dark px-3 py-2">Array</span>
+                    <span class="badge bg-dark px-3 py-2">Two Pointers</span>
+                    <span class="badge bg-dark px-3 py-2">Binary Search</span>
+                    <span class="badge bg-dark px-3 py-2">Greedy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Profile Card -->
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- Profile Image -->
+                        <div class="me-3">
+                            {% if student.profile_image %}
+                                <img src="{{ student.profile_image.url }}"
+                                     alt="{{ student.full_name }}"
+                                     class="rounded-circle border"
+                                     style="width: 90px; height: 90px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white"
+                                     style="width: 90px; height: 90px;">
+                                    <span class="fw-bold fs-4">
+                                        {{ student.first_name|first }}{{ student.last_name|first }}
+                                    </span>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Basic info -->
+                        <div>
+                            <h3 class="mb-0">{{ student.first_name }} {{ student.last_name }}</h3>
+                            <p class="text-muted mb-1">
+                                {{ student.branch }} • {{ student.semester }} semester
+                            </p>
+                            <p class="mb-0">
+                                <strong>Mobile:</strong> {{ student.mobile }}
+                            </p>
+                            {% if student.linkedin %}
+                                <p class="mb-0">
+                                    <a href="{{ student.linkedin }}" target="_blank">LinkedIn</a>
+                                </p>
+                            {% endif %}
+                            {% if student.github %}
+                                <p class="mb-0">
+                                    <a href="{{ student.github }}" target="_blank">GitHub</a>
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Skills -->
+                    <div class="mb-3">
+                        <h5 class="mb-2">Skills</h5>
+                        {% if student.skills %}
+                            <div>
+                                {% for skill in student.skills.split(',') %}
+                                    <span class="badge bg-primary me-1 mb-1">
+                                        {{ skill|trim }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No skills added yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Experience / Projects -->
+                    <div class="mb-3">
+                        <h5 class="mb-2">Experience & Projects</h5>
+                        {% if student.experience %}
+                            <p class="mb-0">{{ student.experience|linebreaks }}</p>
+                        {% else %}
+                            <p class="text-muted">No experience added yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Edit button: only visible to owner -->
+                    {% if request.user.is_authenticated and request.user == student.user %}
+                        <div class="mt-3">
+                            <a href="{% url 'student_profile_edit' student.pk %}"
+                               class="btn btn-outline-primary">
+                                Edit Profile
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

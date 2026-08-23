@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Learning Hub{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'learning_hub/css/home.css' %}">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="overlay"></div>
+
+<div class="hero-content">
+
+<h1>
+
+Learn AI, Programming & Tech Skills
+
+</h1>
+
+<p>
+
+Master Python, C++, Java, Web Development,
+Machine Learning, AI, DSA and much more.
+
+</p>
+
+<form method="GET" class="search-box">
+
+<input
+type="text"
+name="q"
+placeholder="Search Courses...">
+
+<button>
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Search
+
+</button>
+
+</form>
+
+<div class="hero-buttons">
+
+<a href="#featured" class="btn btn-primary">
+
+Start Learning
+
+</a>
+
+<a href="#categories" class="btn btn-outline">
+
+Explore Categories
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- STATS -->
+
+<section class="stats">
+
+<div class="stat-card">
+
+<i class="fa-solid fa-video"></i>
+
+<h2>
+
+{{ latest.count }}
+
+</h2>
+
+<p>
+
+Courses
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-layer-group"></i>
+
+<h2>
+
+{{ categories.count }}
+
+</h2>
+
+<p>
+
+Categories
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-users"></i>
+
+<h2>
+
+10K+
+
+</h2>
+
+<p>
+
+Students
+
+</p>
+
+</div>
+
+<div class="stat-card">
+
+<i class="fa-solid fa-award"></i>
+
+<h2>
+
+100%
+
+</h2>
+
+<p>
+
+Free Learning
+
+</p>
+
+</div>
+
+</section>
+
+{% endblock %}

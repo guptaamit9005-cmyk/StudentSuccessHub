@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+            💬 Collaboration Forum
+        </h2>
+
+        <a href="{% url 'create_discussion' %}"
+           class="btn btn-primary">
+
+            + Create Post
+
+        </a>
+
+    </div>
+
+    <form method="GET" class="mb-4">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search discussions..."
+        >
+
+    </form>
+
+    {% for discussion in discussions %}
+
+    <div class="card shadow-sm mb-3 border-0">
+
+        <div class="card-body">
+
+            <span class="badge bg-primary">
+
+                {{ discussion.category }}
+
+            </span>
+
+            <h4 class="mt-2">
+
+                {{ discussion.title }}
+
+            </h4>
+
+            <p>
+
+                {{ discussion.content|truncatewords:25 }}
+
+            </p>
+
+            <small class="text-muted">
+
+                By {{ discussion.author }}
+                • {{ discussion.created_at }}
+
+            </small>
+
+            <div class="mt-3">
+
+                <a href="{% url 'discussion_detail' discussion.id %}"
+                   class="btn btn-outline-primary">
+
+                    Open Discussion
+
+                </a>
+
+                <span class="ms-3">
+
+                    ❤️ {{ discussion.total_likes }}
+
+                </span>
+
+                <span class="ms-3">
+
+                    💬 {{ discussion.comments.count }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="alert alert-info">
+
+        No Discussions Yet
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <h2>
+            {{ notice.title }}
+        </h2>
+
+        <hr>
+
+        <p>
+            {{ notice.description }}
+        </p>
+
+        <small>
+            Posted by
+            {{ notice.created_by.username }}
+        </small>
+
+    </div>
+
+</div>
+
+{% endblock %}
